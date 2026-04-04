@@ -36,8 +36,8 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceArachnid
-  name: arachnid appearance
   categories: [ HideSpawnMenu ]
+  name: arachnid appearance
   components:
   - type: Inventory
     templateId: arachnid

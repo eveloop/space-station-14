@@ -51,8 +51,8 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceMoth
-  name: moth appearance
   categories: [ HideSpawnMenu ]
+  name: moth appearance
   components:
   - type: Inventory
     speciesId: moth

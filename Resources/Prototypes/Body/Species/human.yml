@@ -48,8 +48,8 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceHuman
-  name: human appearance
   categories: [ HideSpawnMenu ]
+  name: human appearance
   components:
   - type: Inventory
     femaleDisplacements:

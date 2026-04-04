@@ -46,8 +46,8 @@
 - type: entity
   parent: BaseSpeciesAppearance
   id: AppearanceSlimePerson
-  name: SlimePerson appearance
   categories: [ HideSpawnMenu ]
+  name: SlimePerson appearance
   components:
   - type: Inventory
     femaleDisplacements:
