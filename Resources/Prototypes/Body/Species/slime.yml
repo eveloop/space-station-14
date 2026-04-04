@@ -47,6 +47,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceSlimePerson
   name: SlimePerson appearance
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     femaleDisplacements:

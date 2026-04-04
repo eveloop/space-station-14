@@ -2,6 +2,7 @@
   parent: AppearanceHuman
   id: AppearanceDwarf
   name: dwarf appearance
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     femaleDisplacements:

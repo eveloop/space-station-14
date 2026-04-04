@@ -2,6 +2,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceGingerbread
   name: gingerbread appearance
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     femaleDisplacements:

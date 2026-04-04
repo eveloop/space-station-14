@@ -37,6 +37,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceArachnid
   name: arachnid appearance
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     templateId: arachnid

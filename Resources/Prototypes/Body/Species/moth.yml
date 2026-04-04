@@ -52,6 +52,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceMoth
   name: moth appearance
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     speciesId: moth

@@ -64,6 +64,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceVulpkanin
   name: vulpkanin appearance
+  categories: [ HideSpawnMenu ]
   components:
   - type: InitialBody
     organs:

@@ -36,6 +36,7 @@
   parent: BaseSpeciesAppearance
   id: AppearanceDiona
   name: diona appearance
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     templateId: diona
