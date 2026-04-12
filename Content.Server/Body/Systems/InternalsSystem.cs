@@ -1,14 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
-using Content.Server.Popups;
 using Content.Shared.Alert;
-using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Shared.DoAfter;
 using Content.Shared.Internals;
-using Content.Shared.Inventory;
 using Content.Shared.Roles;
 
 namespace Content.Server.Body.Systems;
@@ -19,14 +14,9 @@ public sealed class InternalsSystem : SharedInternalsSystem
     [Dependency] private readonly GasTankSystem _gasTank = default!;
     [Dependency] private readonly RespiratorSystem _respirator = default!;
 
-    private EntityQuery<InternalsComponent> _internalsQuery;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        _internalsQuery = GetEntityQuery<InternalsComponent>();
-
         SubscribeLocalEvent<InternalsComponent, InhaleLocationEvent>(OnInhaleLocation);
         SubscribeLocalEvent<InternalsComponent, StartingGearEquippedEvent>(OnStartingGear);
     }

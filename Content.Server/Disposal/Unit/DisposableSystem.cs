@@ -26,22 +26,13 @@ namespace Content.Server.Disposal.Unit
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
         [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
-        private EntityQuery<DisposalTubeComponent> _disposalTubeQuery;
-        private EntityQuery<DisposalUnitComponent> _disposalUnitQuery;
-        private EntityQuery<MetaDataComponent> _metaQuery;
-        private EntityQuery<PhysicsComponent> _physicsQuery;
-        private EntityQuery<TransformComponent> _xformQuery;
+        [Dependency] private readonly EntityQuery<DisposalTubeComponent> _disposalTubeQuery = default!;
+        [Dependency] private readonly EntityQuery<DisposalUnitComponent> _disposalUnitQuery = default!;
+        [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _disposalTubeQuery = GetEntityQuery<DisposalTubeComponent>();
-            _disposalUnitQuery = GetEntityQuery<DisposalUnitComponent>();
-            _metaQuery = GetEntityQuery<MetaDataComponent>();
-            _physicsQuery = GetEntityQuery<PhysicsComponent>();
-            _xformQuery = GetEntityQuery<TransformComponent>();
-
             SubscribeLocalEvent<DisposalHolderComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<DisposalHolderComponent, ContainerIsInsertingAttemptEvent>(CanInsert);
             SubscribeLocalEvent<DisposalHolderComponent, EntInsertedIntoContainerMessage>(OnInsert);
@@ -105,11 +96,11 @@ namespace Content.Server.Disposal.Unit
             {
                 RemComp<BeingDisposedComponent>(entity);
 
-                var meta = _metaQuery.GetComponent(entity);
+                var meta = MetaData(entity);
                 if (holder.Container.Contains(entity))
                     _containerSystem.Remove((entity, null, meta), holder.Container, reparent: false, force: true);
 
-                var xform = _xformQuery.GetComponent(entity);
+                var xform = Transform(entity);
                 if (xform.ParentUid != uid)
                     continue;
 
@@ -120,7 +111,7 @@ namespace Content.Server.Disposal.Unit
                     _xformSystem.AttachToGridOrMap(entity, xform);
                     var direction = holder.CurrentDirection == Direction.Invalid ? holder.PreviousDirection : holder.CurrentDirection;
 
-                    if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var gridXform))
+                    if (direction != Direction.Invalid && TryComp(gridUid, out TransformComponent? gridXform))
                     {
                         var directionAngle = direction.ToAngle();
                         directionAngle += _xformSystem.GetWorldRotation(gridXform);
@@ -237,7 +228,7 @@ namespace Content.Server.Disposal.Unit
                 if (holder.TimeLeft > 0)
                 {
                     var progress = 1 - holder.TimeLeft / holder.StartingTime;
-                    var origin = _xformQuery.GetComponent(currentTube).Coordinates;
+                    var origin = Transform(currentTube).Coordinates;
                     var destination = holder.CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 

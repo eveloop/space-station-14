@@ -31,6 +31,7 @@ namespace Content.Server.Disposal.Tube
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
+        [Dependency] private readonly EntityQuery<DisposalHolderComponent> _disposableHolderQuery = default!;
 
         public override void Initialize()
         {
@@ -388,10 +389,9 @@ namespace Content.Server.Disposal.Tube
 
             tube.Connected = false;
 
-            var query = GetEntityQuery<DisposalHolderComponent>();
             foreach (var entity in tube.Contents.ContainedEntities.ToArray())
             {
-                if (query.TryGetComponent(entity, out var holder))
+                if (_disposableHolderQuery.TryGetComponent(entity, out var holder))
                     _disposableSystem.ExitDisposals(entity, holder);
             }
         }

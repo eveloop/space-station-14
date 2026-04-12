@@ -25,6 +25,9 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem
 {
+    [Dependency] private readonly EntityQuery<DamageableComponent> _damageQuery = default!;
+    [Dependency] private readonly EntityQuery<TagComponent> _tagQuery = default!;
+
     /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
     /// </summary>
@@ -681,13 +684,6 @@ sealed class Explosion
     /// </summary>
     private readonly Dictionary<Entity<MapGridComponent>, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 
-    // Entity Queries
-    private readonly EntityQuery<TransformComponent> _xformQuery;
-    private readonly EntityQuery<PhysicsComponent> _physicsQuery;
-    private readonly EntityQuery<DamageableComponent> _damageQuery;
-    private readonly EntityQuery<ProjectileComponent> _projectileQuery;
-    private readonly EntityQuery<TagComponent> _tagQuery;
-
     /// <summary>
     ///     Total area that the explosion covers.
     /// </summary>
@@ -752,12 +748,6 @@ sealed class Explosion
         _canCreateVacuum = canCreateVacuum;
         _entMan = entMan;
         _damageable = damageable;
-
-        _xformQuery = entMan.GetEntityQuery<TransformComponent>();
-        _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
-        _damageQuery = entMan.GetEntityQuery<DamageableComponent>();
-        _tagQuery = entMan.GetEntityQuery<TagComponent>();
-        _projectileQuery = entMan.GetEntityQuery<ProjectileComponent>();
 
         if (spaceData != null)
         {
