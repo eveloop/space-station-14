@@ -26,7 +26,6 @@ public sealed partial class ShuttleSystem
 {
     [Dependency] private readonly EntityQuery<DamageableComponent> _damageableQuery = default!;
     [Dependency] private readonly EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
-    [Dependency] private readonly EntityQuery<ProjectileComponent> _projectileQuery = default!;
 
     private bool _enabled;
     private float _minimumImpactInertia;

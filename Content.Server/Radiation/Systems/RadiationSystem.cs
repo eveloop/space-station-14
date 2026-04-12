@@ -23,7 +23,6 @@ public sealed partial class RadiationSystem : EntitySystem
     [Dependency] private readonly EntityQuery<RadiationReceiverComponent> _receiverQuery = default!;
     [Dependency] private readonly EntityQuery<RadiationBlockingContainerComponent> _blockerQuery = default!;
     [Dependency] private readonly EntityQuery<RadiationGridResistanceComponent> _resistanceQuery = default!;
-    [Dependency] private readonly EntityQuery<MapGridComponent> _gridQuery = default!;
 
     private readonly B2DynamicTree<EntityUid> _sourceTree = new();
     private readonly Dictionary<EntityUid, SourceData> _sourceDataMap = new();

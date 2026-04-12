@@ -25,9 +25,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem
 {
-    [Dependency] private readonly EntityQuery<DamageableComponent> _damageQuery = default!;
-    [Dependency] private readonly EntityQuery<TagComponent> _tagQuery = default!;
-
     /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
     /// </summary>
