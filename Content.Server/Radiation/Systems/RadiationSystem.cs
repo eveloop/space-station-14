@@ -7,11 +7,11 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
-using Robust.Shared.Map.Components;
+using Content.Shared.Radiation.Systems;
 
 namespace Content.Server.Radiation.Systems;
 
-public sealed partial class RadiationSystem : EntitySystem
+public sealed partial class RadiationSystem : SharedRadiationSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -36,16 +36,16 @@ public sealed partial class RadiationSystem : EntitySystem
         SubscribeCvars();
         InitRadBlocking();
 
-        SubscribeLocalEvent<RadiationSourceComponent, ComponentInit>(OnSourceInit);
+        SubscribeLocalEvent<RadiationSourceComponent, ComponentStartup>(OnSourceStartup);
         SubscribeLocalEvent<RadiationSourceComponent, ComponentShutdown>(OnSourceShutdown);
         SubscribeLocalEvent<RadiationSourceComponent, MoveEvent>(OnSourceMove);
         SubscribeLocalEvent<RadiationSourceComponent, StackCountChangedEvent>(OnSourceStackChanged);
 
-        SubscribeLocalEvent<RadiationReceiverComponent, ComponentInit>(OnReceiverInit);
+        SubscribeLocalEvent<RadiationReceiverComponent, ComponentStartup>(OnReceiverStartup);
         SubscribeLocalEvent<RadiationReceiverComponent, ComponentShutdown>(OnReceiverShutdown);
     }
 
-    private void OnSourceInit(Entity<RadiationSourceComponent> entity, ref ComponentInit args)
+    private void OnSourceStartup(Entity<RadiationSourceComponent> entity, ref ComponentStartup args)
     {
         UpdateSource(entity);
     }
@@ -74,7 +74,7 @@ public sealed partial class RadiationSystem : EntitySystem
         UpdateSource(entity);
     }
 
-    private void OnReceiverInit(EntityUid uid, RadiationReceiverComponent component, ComponentInit args)
+    private void OnReceiverStartup(EntityUid uid, RadiationReceiverComponent component, ComponentStartup args)
     {
         _activeReceivers.Add(uid);
     }
@@ -84,7 +84,7 @@ public sealed partial class RadiationSystem : EntitySystem
         _activeReceivers.Remove(uid);
     }
 
-    private void UpdateSource(Entity<RadiationSourceComponent> entity)
+    protected override void UpdateSource(Entity<RadiationSourceComponent> entity)
     {
         var (uid, component) = entity;
         var xform = Transform(uid);
