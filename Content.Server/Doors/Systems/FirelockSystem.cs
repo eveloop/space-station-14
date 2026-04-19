@@ -112,6 +112,13 @@ namespace Content.Server.Doors.Systems
             }
         }
 
+        public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid uid, FirelockComponent firelock)
+        {
+            if (_airtightQuery.TryGetComponent(uid, out AirtightComponent? airtight))
+                return CheckPressureAndFire(uid, firelock, Transform(uid), airtight);
+            return (false, false);
+        }
+
         public (bool Pressure, bool Fire) CheckPressureAndFire(
         EntityUid uid,
         FirelockComponent firelock,
